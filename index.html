@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Creator CRM Automation: Setup Checklist</title>
+<style>
+:root{--bg:#120B24;--panel:#1E1438;--panel2:#2A1D4D;--line:#3B2C66;--coral:#FF6B6B;--mint:#34D3B0;--gold:#FFC857;--violet:#9B8CFF;--text:#F4F1FF;--muted:#B3AAD6}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:radial-gradient(1000px 600px at 90% -10%,#3a1f7a55,transparent),var(--bg);color:var(--text);font-family:"Segoe UI",Calibri,Arial,sans-serif;line-height:1.5;min-height:100vh}
+.wrap{max-width:960px;margin:0 auto;padding:36px 22px 90px}
+.kicker{color:var(--mint);font-weight:700;letter-spacing:.14em;text-transform:uppercase;font-size:13px}
+h1{font-size:40px;line-height:1.1;margin:8px 0 10px;letter-spacing:-.01em}
+.grad{background:linear-gradient(90deg,var(--coral),var(--gold));-webkit-background-clip:text;background-clip:text;color:transparent}
+.lead{color:var(--muted);font-size:18px;max-width:760px}
+.top{position:sticky;top:0;z-index:5;background:#120B24ee;backdrop-filter:blur(6px);padding:12px 0 12px;margin:18px 0 8px;border-bottom:1px solid var(--line)}
+.bar{height:10px;border-radius:99px;background:var(--line);overflow:hidden}
+.bar i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--mint),var(--coral));transition:width .3s}
+.meta{display:flex;justify-content:space-between;align-items:center;margin-top:8px;color:var(--muted);font-size:14px;flex-wrap:wrap;gap:8px}
+.meta b{color:var(--text)}
+.fields{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:18px 0}
+.fields label{display:block;font-size:13px;color:var(--muted);margin-bottom:4px;font-weight:600}
+.fields input{width:100%;background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:11px 13px;color:var(--text);font-size:16px;font-family:inherit}
+.fields input:focus{outline:none;border-color:var(--mint)}
+.btn{background:var(--panel2);border:1px solid var(--line);color:var(--text);padding:8px 14px;border-radius:10px;font-weight:600;font-size:14px;cursor:pointer;font-family:inherit}
+.btn:hover{border-color:var(--mint)}
+.btn.small{padding:5px 11px;font-size:13px}
+.phase{background:var(--panel);border:1px solid var(--line);border-radius:16px;margin:16px 0;overflow:hidden}
+.phead{display:flex;align-items:center;gap:14px;padding:16px 20px;cursor:pointer}
+.pnum{width:38px;height:38px;border-radius:50%;background:var(--panel2);border:1px solid var(--line);display:flex;align-items:center;justify-content:center;font-weight:800;color:var(--coral);flex:0 0 auto}
+.phead h2{font-size:20px;flex:1}
+.phead small{color:var(--muted);font-size:13px}
+.phase.done .pnum{background:var(--mint);color:#06241d;border-color:var(--mint)}
+.pbody{display:none;padding:2px 20px 18px}
+.phase.open .pbody{display:block}
+.item{display:flex;gap:12px;padding:11px 0;border-top:1px solid #2c2150}
+.item:first-child{border-top:none}
+.item input[type=checkbox]{width:20px;height:20px;accent-color:var(--mint);margin-top:3px;flex:0 0 auto;cursor:pointer}
+.item .t{flex:1}
+.item .t label{font-weight:600;font-size:16.5px;cursor:pointer;display:block}
+.item.checked .t label{color:var(--muted);text-decoration:line-through}
+.item .d{color:var(--muted);font-size:14.5px;margin-top:3px}
+.item .why{display:inline-block;margin-top:6px;font-size:12.5px;color:var(--gold);cursor:pointer;border-bottom:1px dotted var(--gold)}
+.item .whytxt{display:none;margin-top:6px;font-size:14px;color:var(--text);background:var(--panel2);border-radius:10px;padding:9px 12px}
+.item.showwhy .whytxt{display:block}
+.promptbox{margin:8px 0 4px;position:relative}
+.promptbox pre{background:#0b0617;border:1px solid var(--line);border-radius:12px;padding:14px 16px;font-family:Consolas,"Courier New",monospace;font-size:13px;line-height:1.55;color:#d8d1ff;white-space:pre-wrap;max-height:300px;overflow:auto}
+.promptbox .btn{position:absolute;top:8px;right:10px}
+.promptlabel{font-size:12.5px;font-weight:700;color:var(--mint);letter-spacing:.08em;text-transform:uppercase;margin-top:10px}
+.rules{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.rule{background:var(--panel2);border:1px solid var(--line);border-radius:12px;padding:12px 14px;font-size:14.5px}
+.rule b{color:var(--coral)}
+.callout{background:#3b1620;border:1px solid var(--coral);border-radius:12px;padding:12px 16px;margin:12px 0;font-size:15px}
+.tip{background:#0f3a31;border:1px solid var(--mint);border-radius:12px;padding:12px 16px;margin:12px 0;font-size:15px}
+.footer{color:var(--muted);font-size:13px;margin-top:30px}
+.toolbar{display:flex;gap:10px;flex-wrap:wrap}
+@media (max-width:700px){.fields,.rules{grid-template-columns:1fr}h1{font-size:30px}}
+@media print{body{background:#fff;color:#000}.top{position:static;background:#fff}.pbody{display:block!important}.btn,.promptbox .btn{display:none}.phase,.rule{border-color:#999;background:#fff}.item .d,.lead,.meta{color:#333}.promptbox pre{background:#f4f4f4;color:#000;max-height:none}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="kicker">Pattern · Creator Operations</div>
+  <h1>Creator CRM automation: <span class="grad">setup checklist</span></h1>
+  <p class="lead">Tick through each phase to set up one brand. Type your brand name and email below and every prompt on this page fills itself in. Start with one brand, then repeat.</p>
+
+  <div class="fields">
+    <div><label for="fbrand">Brand name (exactly as it appears in Euka)</label><input id="fbrand" placeholder="e.g. Coco & Eve"></div>
+    <div><label for="femail">Where reports should go</label><input id="femail" placeholder="you@pattern.com"></div>
+  </div>
+
+  <div class="top">
+    <div class="bar"><i id="barfill"></i></div>
+    <div class="meta"><span><b id="donecount">0</b> of <b id="totalcount">0</b> steps done</span>
+      <span class="toolbar"><button class="btn small" id="expand">Expand all</button><button class="btn small" id="collapse">Collapse all</button><button class="btn small" id="reset">Reset ticks</button><button class="btn small" id="print">Print / save PDF</button></span></div>
+  </div>
+
+  <div id="phases"></div>
+
+  <div class="footer">Ticks aren't saved if you close this page, so print or screenshot your progress if you need to pause. Never paste passwords, API keys, or store IDs into chat prompts or shared docs.</div>
+</div>
+
+<script>
+(function(){
+var HR=[
+ ['No open-ended promises','Never offer "tell us what you want and we\'ll send it" or "pick your next product".'],
+ ['Commission only','State one flat commission percentage. Never a second stacked number such as a Shop Ads Boost.'],
+ ['No reply-for-product mechanics','Never ask creators to request samples or reply with a word or code in exchange for product.'],
+ ['Spark codes via form link only','Point to the Euka spark form link and leave [handle]/[shop] untouched. Never ask for the code in a DM.'],
+ ['Content-only trending angles','Angles describe filming style and hooks. No deal, discount, or urgency language inside them.'],
+ ['Stop, never delete, old campaigns','Only stop campaigns that sent messages. Delete only unfinished "(Copy)" duplicates with zero sends.']
+];
+
+function setupPrompt(){return [
+'I want to set up the recurring CRM nudge bot workflow in Euka for this brand: [BRAND].',
+'Send reports to: [EMAIL]. Schedule: Monday, Wednesday, Friday at 10:30 PM.',
+'',
+'Do NOT ask me for store IDs, brand IDs, segment IDs, the commission rate, or a description of brand voice. Find them in Euka yourself. Only come back to me if something is genuinely ambiguous (several brands match the name, no existing campaigns to learn from, or conflicting commission rates). If no commission rate is stated anywhere, ask me. Never guess one.',
+'',
+'STEP 1 - DISCOVER THE BRAND: list the brands I can access and find [BRAND]. Get its brand ID and store ID.',
+'STEP 2 - DISCOVER SEGMENTS: list the brand\'s segments and campaigns. Map them to these lifecycle segments (note each segment ID and audience size): Samples in Shipment, Content Pending, Posted Just Once, Inactive Creators, Content Unfulfilled, Posted a Video, Revenue Generating / Top Creators. Note the existing campaign naming convention and match it.',
+'STEP 3 - DISCOVER COMMISSION + VOICE: read 2-3 live campaigns. Extract the commission percentage (commission only), summarize brand voice in 2-3 sentences, and note any hard copy rules or permanent extras. Ask me whether any extra you find is permanent or time-boxed.',
+'STEP 4 - SHOW ME A SHORT SUMMARY (segments found, commission, voice, any overrides needed such as a lower launch minimum) and WAIT for my confirmation. Do not save anything yet.',
+'STEP 5 - BUILD 3 SCHEDULED TASKS, each fully self-contained (they run with no memory of this chat):',
+'  Monday: Samples in Shipment + Content Pending',
+'  Wednesday: Posted Just Once + Inactive Creators + Content Unfulfilled',
+'  Friday: Posted a Video (Spark Code ask via the Euka spark form link, placeholders untouched, never a DM reply) + Revenue Generating',
+'  If a segment does not exist for this brand, skip that slot. Never invent a substitute.',
+'',
+'FIXED RULES TO WRITE INTO EVERY TASK PROMPT:',
+'- WEEKLY STOP-AND-REPLACE: before creating a segment\'s new campaign, STOP every running campaign in that segment (only stop, never archive or delete ones that sent messages).',
+'- Per segment: find running campaigns -> stop them -> duplicate the latest -> write fresh copy -> rename with today\'s date -> save as stopped (set group_id AND segmentAssignments) -> refresh the audience count -> set to running if count >= 20 (otherwise leave stopped and flag).',
+'- If a duplicate cannot be finished in the same run, delete that unfinished duplicate.',
+'- Each cycle, pull the brand\'s top videos by revenue (last ~30 days) and add 2-3 fresh content-style angles plus one real example video.',
+'- NEVER: open-ended promises or offers; a second percentage next to the commission; asking creators to request samples or reply with a word/code for product; deal, discount, or urgency angles; changing commission, links, or targeting on your own.',
+'- Brand extras and promos are opt-in, time-boxed, and only added when I explicitly say so.',
+'- End each run with a report to [EMAIL]: commission used, campaigns stopped, new campaign IDs and names, audience counts, final copy for each, anything deleted, anything that failed or was held back.'
+].join('\n')}
+
+var P={
+ setup:{label:'Starter prompt (paste into a new Cowork chat)',text:setupPrompt()},
+ review:{label:'Review the first run',text:[
+'Review the campaigns the [BRAND] Monday scheduled task just created in Euka.',
+'For each new campaign show: name, created date, audience count, running or stopped, and the full message text.',
+'Then check every message against these hard rules and tell me pass or fail for each: no open-ended promise or offer; commission only (no second percentage); no ask to request samples or reply with a word/code for product; no deal/discount/urgency angle; trending angles are content-style only.',
+'Also confirm that last week\'s campaigns in these segments are stopped and that exactly one campaign is running per segment. Do not change anything. Just report.'].join('\n')},
+ audit:{label:'Weekly audit',text:[
+'Audit the [BRAND] CRM nudges in Euka. For each lifecycle segment: find the currently running campaign(s) and report name, created date, audience count, and message text.',
+'Flag: more than one running campaign in a segment; a created date that does not match the latest expected Mon/Wed/Fri run; any message that breaks a hard rule (open-ended promise, second percentage next to commission, reply-for-product ask, spark code requested in a DM, deal/urgency angle).',
+'Then list the scheduled tasks for this brand with enabled/disabled, last run, and next run. Do not change anything. Just report what is wrong.'].join('\n')},
+ promo:{label:'Time-boxed promo: draft first',text:[
+'For [BRAND] only, I want to add a time-boxed message to all CRM nudges until [END DATE]. The promo is: [DESCRIBE THE PROMO EXACTLY].',
+'Before changing anything: show me the exact final text of EVERY message (no "same as above" shortcuts), in the brand voice, with trending angles still content-only and the promo on its own separate line. I will share it with my manager.',
+'WAIT for my explicit approval. After approval: update the live campaigns, update the scheduled task prompts so future cycles include the promo and stop including it after [END DATE], and create a one-time task the day after [END DATE] that removes the promo line and reports back.'].join('\n')},
+ offboard:{label:'Stop covering a brand',text:[
+'We are no longer covering [BRAND]. List its running CRM campaigns and its scheduled tasks and tell me exactly what you would stop or disable.',
+'WAIT for my yes. Then stop (do not delete or archive) the running campaigns, disable the scheduled tasks, and confirm that nothing is still running or scheduled for this brand.'].join('\n')}
+};
+
+var PHASES=[
+ {t:'Before you start',s:'10 min',items:[
+  {t:'Cowork is installed and you are signed in',d:'You need Claude Cowork (desktop).'},
+  {t:'The Euka connector is connected',d:'Quick test: ask Claude "list the brands I can access in Euka". If your brand is not in the list, stop here and get access first.',why:'Claude can only act on brands your Euka account can see. A brand missing from this list cannot be automated yet.'},
+  {t:'Scheduled Tasks is available',d:'Look for the "Scheduled" section in the sidebar.'},
+  {t:'Decide who approves promos',d:'Agree with your manager that any boosted commission, discount, or exclusive gets reviewed before it goes live.'},
+  {t:'Read the six hard rules below',d:'These go into every task prompt. They are not optional.',rules:true}
+ ]},
+ {t:'Discover and confirm',s:'15 min',items:[
+  {t:'Paste the starter prompt into a new chat',d:'Fill in your brand and email at the top of this page first.',prompt:'setup'},
+  {t:'Let Claude do the discovery',d:'It finds your brand ID, store ID, segments, audience sizes, commission, voice, and naming convention. You should not need to give it any IDs.'},
+  {t:'Read the summary and correct it',d:'Check: commission %, which segments exist, voice, and any permanent extras (like a community or TAP link). Tell Claude which extras are permanent vs. time-boxed.',why:'Never let Claude guess a commission. If the summary shows a rate you cannot verify, check a live campaign in Euka yourself.'},
+  {t:'Decide the launch minimum',d:'Default: do not launch a segment under 20 creators. For a brand-new or tiny program you can lower it (we use "at least 1" for Sour Jacks). Write the choice into the prompt.'},
+  {t:'Confirm only when it all looks right',d:'Claude waits for your yes before saving anything.'}
+ ]},
+ {t:'Build the schedule',s:'10 min',items:[
+  {t:'Confirm 3 scheduled tasks were created',d:'Monday, Wednesday, Friday at about 10:30 PM. Open each in the Scheduled sidebar.'},
+  {t:'Check each task\'s segments are right',d:'Mon: Samples in Shipment + Content Pending. Wed: Posted Just Once + Inactive + Content Unfulfilled. Fri: Posted a Video (spark ask) + Revenue Generating. Missing segment = skipped slot.'},
+  {t:'Check the hard rules are in every prompt',d:'Open the task prompt and search for: stop-and-replace, commission only, form link, no open-ended promises.'},
+  {t:'Check the prompt is fully self-contained',d:'It must include store ID, brand ID, segment IDs, voice, commission, and the report email. Scheduled runs do not remember this chat.'},
+  {t:'Leave the scheduler enabled and the app open',d:'Tasks run while the app is open and catch up on next launch.',why:'We once found a brand\'s Monday and Wednesday cycles had not run for weeks while Friday had. A closed app is the usual cause.'}
+ ]},
+ {t:'Test run',s:'20 min',items:[
+  {t:'Click "Run now" on one task',d:'This pre-approves the tools the task needs, so later runs do not stall on permission prompts. Start with the Monday task.'},
+  {t:'Review what it created',d:'Paste this review prompt after the run finishes.',prompt:'review'},
+  {t:'Read every message out loud',d:'Does it sound like the brand? Is the commission right? Any promise you did not approve? Any link that should not be there?'},
+  {t:'Fix the prompt, not just the output',d:'If copy was off, tell Claude what to change and have it update the saved task prompt so every future run is fixed.',why:'The scheduled prompt is the system. Fixing one campaign by hand only helps once.'},
+  {t:'Check the report email arrived',d:'You should receive IDs, audience counts, final copy, and any failures.'}
+ ]},
+ {t:'Weekly operations',s:'10 min/week',items:[
+  {t:'Run the weekly audit',d:'Every Monday morning is a good time.',prompt:'audit'},
+  {t:'Confirm exactly one live campaign per segment',d:'More than one means stop-and-replace failed. Fewer means a segment was held back (check the audience count).'},
+  {t:'Confirm dates match the schedule',d:'Last Mon/Wed/Fri run should be dated that day. Gaps mean the task did not fire.'},
+  {t:'Skim the copy for drift',d:'Look for anything that sneaked in: an old promo, a stacked percentage, a banned phrase.'},
+  {t:'Share lessons with the team',d:'Any new rule or gotcha goes into the shared playbook so everyone benefits.'}
+ ]},
+ {t:'Promos and special offers',s:'when needed',items:[
+  {t:'Draft first, with exact wording',d:'Use the prompt below. Never let a promo go live without a written approval.',prompt:'promo'},
+  {t:'Get the brand owner or manager to approve',d:'Forward the exact message text. No "same as above" placeholders.'},
+  {t:'Set the end date in the task prompts',d:'Tell the prompt to stop including the promo after the end date.'},
+  {t:'Schedule a one-time revert',d:'A one-time task the day after the end date strips the promo from live campaigns.',why:'Temporary things drift into permanent fixtures if nobody removes them.'},
+  {t:'Keep permanent items marked permanent',d:'A TAP link or community link that should stay forever must be labeled permanent so the revert does not remove it.'}
+ ]},
+ {t:'When a brand changes',s:'as needed',items:[
+  {t:'Pausing or dropping a brand',d:'Stop running campaigns (do not delete) and disable the three scheduled tasks. Use the prompt below.',prompt:'offboard'},
+  {t:'Adding a new brand',d:'Go back to Phase 2. Make sure it appears in your Euka brand list first.'},
+  {t:'New program with tiny audiences',d:'Lower the launch minimum explicitly and flag counts in the report so you can raise it later.'},
+  {t:'Product-specific brands',d:'Name the exact sampled product in the prompt and forbid mentioning other products.'}
+ ]}
+];
+
+var phasesEl=document.getElementById('phases');
+var checks=[];
+PHASES.forEach(function(ph,pi){
+  var wrap=document.createElement('div');wrap.className='phase'+(pi===0?' open':'');
+  var head=document.createElement('div');head.className='phead';
+  head.innerHTML='<div class="pnum">'+(pi+1)+'</div><h2>'+ph.t+'</h2><small>'+ph.s+' · <span class="pc">0/'+ph.items.length+'</span></small>';
+  head.onclick=function(){wrap.classList.toggle('open')};
+  var body=document.createElement('div');body.className='pbody';
+  ph.items.forEach(function(it,ii){
+    var row=document.createElement('div');row.className='item';
+    var id='c_'+pi+'_'+ii;
+    var inner='<input type="checkbox" id="'+id+'"><div class="t"><label for="'+id+'">'+it.t+'</label><div class="d">'+it.d+'</div>';
+    if(it.why){inner+='<span class="why">Why it matters</span><div class="whytxt">'+it.why+'</div>'}
+    inner+='<div class="extra"></div></div>';
+    row.innerHTML=inner;
+    var extra=row.querySelector('.extra');
+    if(it.rules){
+      var g=document.createElement('div');g.className='rules';g.style.marginTop='10px';
+      HR.forEach(function(r){var d=document.createElement('div');d.className='rule';d.innerHTML='<b>'+r[0]+'</b><br>'+r[1];g.appendChild(d)});
+      extra.appendChild(g);
+    }
+    if(it.prompt){
+      var key=it.prompt;
+      var pb=document.createElement('div');pb.className='promptbox';pb.setAttribute('data-key',key);
+      pb.innerHTML='<div class="promptlabel">'+P[key].label+'</div><div style="position:relative"><button class="btn small">Copy</button><pre></pre></div>';
+      extra.appendChild(pb);
+    }
+    row.querySelector('.why')&&(row.querySelector('.why').onclick=function(e){row.classList.toggle('showwhy');e.stopPropagation()});
+    var cb=row.querySelector('input');
+    cb.onchange=function(){row.classList.toggle('checked',cb.checked);update()};
+    checks.push({cb:cb,phase:wrap,pi:pi});
+    body.appendChild(row);
+  });
+  wrap.appendChild(head);wrap.appendChild(body);phasesEl.appendChild(wrap);
+});
+
+function fill(t){
+  var b=document.getElementById('fbrand').value.trim()||'[BRAND]';
+  var e=document.getElementById('femail').value.trim()||'[EMAIL]';
+  return t.split('[BRAND]').join(b).split('[EMAIL]').join(e);
+}
+function renderPrompts(){
+  [].forEach.call(document.querySelectorAll('.promptbox'),function(pb){
+    pb.querySelector('pre').textContent=fill(P[pb.getAttribute('data-key')].text);
+  });
+}
+[].forEach.call(document.querySelectorAll('.promptbox'),function(pb){
+  var btn=pb.querySelector('.btn');
+  btn.onclick=function(){
+    var txt=pb.querySelector('pre').textContent;
+    function done(){btn.textContent='Copied ✓';setTimeout(function(){btn.textContent='Copy'},1500)}
+    function fb(){var t=document.createElement('textarea');t.value=txt;document.body.appendChild(t);t.select();try{document.execCommand('copy')}catch(e){}document.body.removeChild(t);done()}
+    if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(txt).then(done,fb)}else{fb()}
+  };
+});
+document.getElementById('fbrand').oninput=renderPrompts;
+document.getElementById('femail').oninput=renderPrompts;
+renderPrompts();
+
+function update(){
+  var done=checks.filter(function(c){return c.cb.checked}).length;
+  document.getElementById('donecount').textContent=done;
+  document.getElementById('totalcount').textContent=checks.length;
+  document.getElementById('barfill').style.width=(checks.length?done/checks.length*100:0)+'%';
+  PHASES.forEach(function(ph,pi){
+    var mine=checks.filter(function(c){return c.pi===pi});
+    var d=mine.filter(function(c){return c.cb.checked}).length;
+    var ph_el=phasesEl.children[pi];
+    ph_el.querySelector('.pc').textContent=d+'/'+mine.length;
+    ph_el.classList.toggle('done',d===mine.length);
+  });
+}
+update();
+
+document.getElementById('expand').onclick=function(){[].forEach.call(phasesEl.children,function(p){p.classList.add('open')})};
+document.getElementById('collapse').onclick=function(){[].forEach.call(phasesEl.children,function(p){p.classList.remove('open')})};
+document.getElementById('reset').onclick=function(){checks.forEach(function(c){c.cb.checked=false;c.cb.parentNode.classList.remove('checked')});update()};
+document.getElementById('print').onclick=function(){window.print()};
+})();
+</script>
+</body>
+</html>
